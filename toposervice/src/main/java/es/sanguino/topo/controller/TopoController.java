@@ -18,7 +18,7 @@ public class TopoController {
     private TopoService topoService;
 
     @GetMapping("/{city}")
-    public Mono<CityDTO> getCity(@PathVariable String city) {
+    public Mono<CityDTO> getCity(@PathVariable String city) throws InterruptedException {
         return topoService.getCity(city)
                 .map(this::toCityDTO);
     }

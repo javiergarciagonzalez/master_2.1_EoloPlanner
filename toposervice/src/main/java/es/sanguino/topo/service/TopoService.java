@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
+import java.util.Random;
+
 @Service
 public class TopoService {
 
     @Autowired
     private CityRepository cityRepository;
 
-    public Mono<City> getCity(String id) {
+    public Mono<City> getCity(String id) throws InterruptedException {
+        Thread.sleep(1000 + new Random().nextInt(2000));
         return this.cityRepository.findById(id)
                 .switchIfEmpty(
                         Mono.error(new ResponseStatusException(

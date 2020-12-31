@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Component
 public class Consumer {
@@ -18,11 +19,12 @@ public class Consumer {
 	private WeatherClient weatherClient;
 
 	@RabbitListener(queues = "eoloplantCreationRequests", ackMode = "AUTO")
-	public void received(Eoloplant eoloplant) {
+	public void received(Eoloplant eoloplant) throws ExecutionException, InterruptedException {
 		System.out.println("eoloplantCreationRequests: "+eoloplant.toString());
 
 		CompletableFuture<String> weather = weatherClient.getWeather(eoloplant.getCity());
 
+		eoloplant.setWeather(weather.get());
 
 		producer.sendMessage(eoloplant);
 	}

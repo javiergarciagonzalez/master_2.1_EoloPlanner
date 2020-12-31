@@ -12,4 +12,4 @@ const packageDefinition = protoLoader.loadSync(__dirname + '/../WeatherService.p
 
 const wheatherServiceProto = grpc.loadPackageDefinition(packageDefinition);
 
-module.exports = wheatherServiceProto.es.sanguino.mastercloudapps.grpc.WeatherService;
+module.exports = wheatherServiceProto.es.sanguino.grpc.WeatherService;

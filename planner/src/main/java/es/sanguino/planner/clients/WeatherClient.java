@@ -25,8 +25,6 @@ public class WeatherClient {
 
         Weather response = this.client.getWeather(request);
 
-        System.out.println("Response received from server:\n" + response);
-
         return CompletableFuture.completedFuture(response.getWeather());
     }
 }

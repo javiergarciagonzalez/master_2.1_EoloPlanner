@@ -10,7 +10,7 @@ public class Eoloplant implements Serializable {
     private String city;
     private int progress = 0;
     private String weather;
-    private String topo;
+    private String landscape;
 
     public Eoloplant(@JsonProperty("id") int id,
                      @JsonProperty("city") String city) {
@@ -47,8 +47,8 @@ public class Eoloplant implements Serializable {
         this.weather = weather;
     }
 
-    public void setTopo(String topo) {
-        this.topo = topo;
+    public void setLandscape(String landscape) {
+        this.landscape = landscape;
     }
 
     public boolean getCompleted() {
@@ -56,7 +56,7 @@ public class Eoloplant implements Serializable {
     }
 
     public String getPlanning() {
-        return this.city + '-' + this.weather + '-' + this.topo;
+        return this.city + '-' + this.weather + '-' + this.landscape;
     }
 
     @Override

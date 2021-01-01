@@ -16,8 +16,12 @@ public class TopoService {
     @Autowired
     private CityRepository cityRepository;
 
-    public Mono<City> getCity(String id) throws InterruptedException {
-        Thread.sleep(1000 + new Random().nextInt(2000));
+    public Mono<City> getCity(String id) {
+        try {
+            Thread.sleep(1000 + new Random().nextInt(2000));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return this.cityRepository.findById(id)
                 .switchIfEmpty(
                         Mono.error(new ResponseStatusException(

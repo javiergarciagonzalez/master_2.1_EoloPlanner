@@ -1,6 +1,6 @@
 package es.sanguino.planner.clients;
 
-import es.sanguino.planner.Producer;
+import es.sanguino.planner.service.RabbitProducer;
 import es.sanguino.planner.models.Eoloplant;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 public class RabbitConsumer {
 
 	@Autowired
-	private Producer producer;
+	private RabbitProducer rabbitProducer;
 
 	@Autowired
 	private WeatherClient weatherClient;
@@ -29,16 +29,16 @@ public class RabbitConsumer {
 
 		weather.thenRun(() -> {
 			eoloplant.setWeather(weather.join());
-			producer.sendMessage(eoloplant);
+			rabbitProducer.sendMessage(eoloplant);
 		});
 
 		landscape.thenRun(() -> {
 			eoloplant.setLandscape(landscape.join());
-			producer.sendMessage(eoloplant);
+			rabbitProducer.sendMessage(eoloplant);
 		});
 
-		allFutures.thenRun(() -> producer.sendMessage(eoloplant));
+		allFutures.thenRun(() -> rabbitProducer.sendMessage(eoloplant));
 
-		producer.sendMessage(eoloplant);
+		rabbitProducer.sendMessage(eoloplant);
 	}
 }

@@ -1,4 +1,4 @@
-package es.sanguino.planner;
+package es.sanguino.planner.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -56,6 +56,9 @@ public class Eoloplant implements Serializable {
     }
 
     public String getPlanning() {
+        if (this.weather == null || this.landscape == null)
+            return null;
+
         return this.city + '-' + this.weather + '-' + this.landscape;
     }
 

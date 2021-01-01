@@ -1,26 +1,15 @@
-const amqp = require('amqplib/callback_api');
+import ch from './amqpConnection.js';
+import config from 'config';
 
-const CONN_URL = 'amqp://guest:guest@localhost';
-const QUEUE = "eoloplantCreationRequests";
+const QUEUE = config.get('amqp.queues.creation');
+const OPTIONS = config.get('amqp.options');
 
-amqp.connect(CONN_URL, async function (err, conn) {
+ch.assertQueue(QUEUE, OPTIONS);
 
-  let ch = await conn.createChannel();
-  ch.assertQueue(QUEUE, {durable: false});
-
-  const data = JSON.stringify({
-    id: 1,
-    city: 'Madrid'
-  });
-  console.log(`sending ${data}`);
-  ch.sendToQueue(QUEUE, Buffer.from(data));
-
-  process.on('exit', (code) => {
-    ch.close();
-    console.log(`Closing rabbitmq channel`);
-  });
+const data = JSON.stringify({
+  id: 1,
+  city: 'Madrid'
 });
 
-
-
-
+console.log(`sending ${data}`);
+ch.sendToQueue(QUEUE, Buffer.from(data));

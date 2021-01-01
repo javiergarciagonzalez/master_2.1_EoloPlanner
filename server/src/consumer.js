@@ -1,18 +1,11 @@
-var amqp = require('amqplib/callback_api');
+import ch from './amqpConnection.js';
+import config from 'config';
 
-const CONN_URL = 'amqp://guest:guest@localhost';
+const QUEUE = config.get('amqp.queues.progress');
+const OPTIONS = config.get('amqp.options');
 
-const QUEUE = "eoloplantCreationProgressNotifications";
-
-amqp.connect(CONN_URL, async function (err, conn) {
-
-  let ch = await conn.createChannel();
-  ch.assertQueue(QUEUE, {durable: false});
-  ch.consume(QUEUE, function (msg) {
-
-      console.log("Message:", msg.content.toString());
-
-    }, {noAck: true}
-  );
-
-});
+ch.assertQueue(QUEUE, OPTIONS);
+ch.consume(QUEUE, function (msg) {
+    console.log("Message:", msg.content.toString());
+  }, {noAck: true}
+);

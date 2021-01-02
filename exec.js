@@ -1,7 +1,7 @@
 const { spawn } = require('child_process');
 function exec(serviceName, command){
 
-  console.log(`Stated service [${serviceName}]`);
+  console.log(`Started service [${serviceName}]`);
 
   let cmd = spawn(command, [], { cwd: './' + serviceName, shell: true });
   
@@ -17,4 +17,4 @@ function exec(serviceName, command){
 exec('weatherservice', 'node src/server.js');
 exec('toposervice', 'mvn spring-boot:run');
 exec('server','node src/server.js');
-exec('worker','mvn spring-boot:run');
+exec('planner','mvn spring-boot:run');

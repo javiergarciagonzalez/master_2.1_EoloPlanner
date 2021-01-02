@@ -5,21 +5,21 @@ import wsRouter from './routes/wsRouter.js';
 import bodyParser from 'body-parser';
 import amqpConsumer from "./connections/amqpConsumer.js";
 
-const app = express();
-const wsApp = expressWs(app);
+const server = express();
+const wsApp = expressWs(server);
 const wsEoloplants = wsApp.getWss('/eoloplants');
 amqpConsumer(wsEoloplants)
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.json());
-app.use('/', eoloplantsRouter);
+server.use(bodyParser.urlencoded({extended: true}));
+server.use(express.json());
+server.use('/', eoloplantsRouter);
 
 
-app.use(express.static('public'));
+server.use(express.static('public'));
 
-app.ws('/eoloplants', wsRouter(wsApp));
+server.ws('/eoloplants', wsRouter(wsApp));
 
-app.listen(8880, () => console.log('Example app listening on port 8080!'));
+server.listen(8880, () => console.log('Example server listening on port 8080!'));
 
 
 

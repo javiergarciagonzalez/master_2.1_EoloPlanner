@@ -56,7 +56,7 @@ public class Eoloplant implements Serializable {
     }
 
     public String getPlanning() {
-        if (this.weather == null || this.landscape == null)
+        if (!this.getCompleted())
             return null;
 
         return this.city + '-' + this.weather + '-' + this.landscape;

@@ -1,5 +1,8 @@
 import {connect} from 'amqplib';
 import config from 'config';
+import DebugLib from 'debug';
+
+const debug = new DebugLib('server:amqp');
 
 
 const URL = config.get('amqp.url');
@@ -8,7 +11,7 @@ const ch = await conn.createChannel();
 
 process.on('exit', () => {
   ch.close();
-  console.log(`Closing rabbitmq channel`);
+  debug(`Closing rabbitmq channel`);
 });
 
 export default ch;

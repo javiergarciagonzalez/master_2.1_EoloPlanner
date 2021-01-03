@@ -1,4 +1,4 @@
-import {saveClient} from '../models/EoloPlantsUsers.js'
+import {saveClient} from '../clients/wsClient.js'
 import DebugLib from 'debug';
 const debug = new DebugLib('server:ws');
 

@@ -2,7 +2,7 @@ const plantsWs = new Map();
 const usersWs = new Map();
 import DebugLib from 'debug';
 const debug = new DebugLib('server:users:relations');
-let allClients;
+let wsEoloplants;
 
 export function savePlant (plantId, userId) {
   debug('savePlant', plantId, userId);
@@ -14,12 +14,12 @@ export function saveClient (userId, ws) {
   usersWs.set(userId, ws);
 }
 
-export function saveClients (clients) {
-  allClients = clients;
+export function saveClients (wsEP) {
+  wsEoloplants = wsEP;
 }
 
 export function getClients () {
-  return usersWs;
+  return wsEoloplants.clients;
 }
 
 export function getWs (plantId) {

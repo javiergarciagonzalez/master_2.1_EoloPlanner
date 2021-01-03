@@ -9,7 +9,7 @@ import {saveClients} from './models/EoloPlantsUsers.js';
 const server = express();
 const wsEoloplants = expressWs(server).getWss('/eoloplants');
 
-saveClients(wsEoloplants.clients);
+saveClients(wsEoloplants);
 amqpConsumer();
 
 server.use(bodyParser.urlencoded({extended: true}));

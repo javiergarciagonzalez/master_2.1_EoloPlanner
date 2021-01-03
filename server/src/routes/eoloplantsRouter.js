@@ -3,7 +3,8 @@ import {EoloPlant} from '../models/EoloPlant.js'
 import amqpProducer from "../clients/amqpProducer.js";
 import {savePlant} from '../models/EoloPlantsUsers.js';
 import DebugLib from 'debug';
-const debug = new DebugLib('rest');
+
+const debug = new DebugLib('server:rest');
 
 function getRoutes() {
   const routes = Router();

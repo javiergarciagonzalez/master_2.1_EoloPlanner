@@ -20,7 +20,7 @@ server.use(express.static('public'));
 
 server.ws('/eoloplants', wsRouter);
 
-server.listen(8880, () => console.log('Example server listening on port 8080!'));
+server.listen(8880, () => console.log('Server listening on port 8880!'));
 
 
 

@@ -74,5 +74,10 @@ function editPlant(plant) {
         </div>
       </div>
     `;
-  document.querySelector('#plant-' + plant.id).innerHTML = htmlContent;
+  const plantElement = document.querySelector('#plant-' + plant.id);
+  if (!plantElement) {
+    attachPlant(plant);
+  } else {
+    document.querySelector('#plant-' + plant.id).innerHTML = htmlContent;
+  }
 }

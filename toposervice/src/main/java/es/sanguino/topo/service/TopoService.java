@@ -22,7 +22,7 @@ public class TopoService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return this.cityRepository.findById(id)
+        return this.cityRepository.findByIdIgnoreCase(id)
                 .switchIfEmpty(
                         Mono.error(new ResponseStatusException(
                                 HttpStatus.NOT_FOUND, "City with id " + id + " not found")));

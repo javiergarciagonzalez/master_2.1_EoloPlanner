@@ -8,5 +8,5 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface CityRepository extends ReactiveCrudRepository<City, Long> {
 
-    Mono<City> findById(String id);
+    Mono<City> findByIdIgnoreCase(String id);
 }

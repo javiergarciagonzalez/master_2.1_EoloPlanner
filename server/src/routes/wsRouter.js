@@ -1,6 +1,6 @@
 import {saveClient} from '../models/EoloPlantsUsers.js'
 import DebugLib from 'debug';
-const debug = new DebugLib('ws');
+const debug = new DebugLib('server:ws');
 
 export default (ws, req) => {
   debug('user connected', req.headers['sec-websocket-key']);

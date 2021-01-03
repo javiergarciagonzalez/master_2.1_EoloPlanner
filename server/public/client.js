@@ -45,7 +45,8 @@ async function createPlant() {
 
 function attachPlant(plant) {
   const htmlContent = `<div id="plant-${plant.id}" class="col"></div>`;
-  document.querySelector('#plants').innerHTML += htmlContent;
+  const current = document.querySelector('#plants').innerHTML;
+  document.querySelector('#plants').innerHTML = htmlContent + current;
   editPlant(plant);
 }
 

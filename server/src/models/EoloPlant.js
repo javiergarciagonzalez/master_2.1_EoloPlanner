@@ -14,6 +14,7 @@ export async function updateEoloPlant(plant) {
   debug('updateDB findOne', plantSQL.id);
 
   plantSQL.progress = plant.progress;
+  plantSQL.completed = plant.completed;
   if (plant.completed) {
     const [,weather, landscape] = plant.planning.split('-');
     plantSQL.weather = weather;
@@ -36,6 +37,7 @@ EoloPlant.init({
     allowNull: false
   },
   progress: DataTypes.INTEGER,
+  completed: DataTypes.BOOLEAN,
   weather: DataTypes.STRING,
   landscape: DataTypes.STRING
 }, {

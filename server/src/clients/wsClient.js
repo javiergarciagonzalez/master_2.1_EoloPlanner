@@ -20,7 +20,7 @@ export function createWSEoloplants(wsEP) {
 }
 
 export function wsSend(plant) {
-  if (plant.progress === 100) {
+  if (plant.completed) {
     wsEoloplants.clients.forEach(client => {
       client.send(JSON.stringify(plant));
     });

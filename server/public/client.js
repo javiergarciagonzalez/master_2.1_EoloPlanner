@@ -43,11 +43,23 @@ async function createPlant() {
   attachPlant(plant);
 }
 
+async function getAllPlants() {
+  const response = await fetch('/api/eoloplants');
+  const plants = await response.json();
+  plants.map(attachPlant);
+}
+
 function attachPlant(plant) {
   const htmlContent = `<div id="plant-${plant.id}" class="col"></div>`;
   const current = document.querySelector('#plants').innerHTML;
   document.querySelector('#plants').innerHTML = htmlContent + current;
   editPlant(plant);
+}
+
+function deletePlant(id) {
+  const elem = document.querySelector('#plant-' + id);
+  elem.parentNode.removeChild(elem);
+  fetch('/api/eoloplants/'+id, {method: 'DELETE'});
 }
 
 function editPlant(plant) {
@@ -57,7 +69,6 @@ function editPlant(plant) {
     [, weather, landscape] = plant.planning.split('-');
     document.querySelector('#generate').disabled = false;
   }
-
   const htmlContent = `
       <div class="card mb-4 shadow-sm">
         <div class="card-header">
@@ -68,8 +79,11 @@ function editPlant(plant) {
             <li class="weather">Weather: ${weather}</li>
             <li class="landscape">Landscape: ${landscape}</li>
           </ul>
-          <div class="progress">
-            <div class="progress-bar ${plant.completed ? 'bg-success' : ''}" role="progressbar" style="width: ${plant.progress || 0}%;" aria-valuemin="0" aria-valuemax="100">${plant.created ? 'created!' : plant.progress || 0}%</div>
+          <div class="d-flex align-items-center">
+            <div class="progress flex-grow-1 m-2">
+                <div class="progress-bar ${plant.progress === 100 ? 'bg-success' : ''}" role="progressbar" style="width: ${plant.progress || 0}%;" aria-valuemin="0" aria-valuemax="100">${plant.created ? 'created!' : plant.progress || 0}%</div>
+            </div>
+            <button type="button" onClick="deletePlant(${plant.id})" class="btn btn-danger btn-sm ${plant.progress !== 100 ? 'd-none' : ''}"><i class="fas fa-trash-alt"></i></button>
           </div>
         </div>
       </div>
@@ -81,3 +95,5 @@ function editPlant(plant) {
     document.querySelector('#plant-' + plant.id).innerHTML = htmlContent;
   }
 }
+
+getAllPlants();

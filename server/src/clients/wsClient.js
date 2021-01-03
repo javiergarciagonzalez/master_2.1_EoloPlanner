@@ -5,13 +5,13 @@ import DebugLib from 'debug';
 const debug = new DebugLib('server:users:relations');
 let wsEoloplants;
 
-export function savePlant(plantId, userId) {
-  debug('savePlant', plantId, userId);
+export function savePlantCreator(plantId, userId) {
+  debug('savePlantCreator', plantId, userId);
   plantsWs.set(plantId, usersWs.get(userId));
 }
 
-export function saveClient(userId, ws) {
-  debug('saveClient', userId);
+export function saveClientSocket(userId, ws) {
+  debug('saveClientSocket', userId);
   usersWs.set(userId, ws);
 }
 

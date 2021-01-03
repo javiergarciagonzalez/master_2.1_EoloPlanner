@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {EoloPlant} from '../models/EoloPlant.js'
 import amqpProducer from "../clients/amqpProducer.js";
-import {savePlant} from '../clients/wsClient.js';
+import {savePlantCreator} from '../clients/wsClient.js';
 import DebugLib from 'debug';
 
 const debug = new DebugLib('server:rest');
@@ -24,7 +24,7 @@ function getRoutes() {
       return res.status(409).send('Bad request!');
     }
     debug('user-key recieved', req.headers['user-key'])
-    savePlant(plant.id, req.headers['user-key']);
+    savePlantCreator(plant.id, req.headers['user-key']);
     amqpProducer(JSON.stringify({
       id: plant.id,
       city: plant.city

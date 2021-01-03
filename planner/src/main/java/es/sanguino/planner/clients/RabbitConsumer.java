@@ -29,14 +29,17 @@ public class RabbitConsumer {
 		CompletableFuture<String> landscape = topoClient.getLandscape(eoloplant.getCity());
 		CompletableFuture<Void> allFutures = CompletableFuture.allOf(weather, landscape);
 
+		eoloplant.advanceProgress();
+		rabbitProducer.sendMessage(eoloplant);
+
 		weather.thenRun(() -> {
-			eoloplant.setWeather(weather.join());
+			eoloplant.addPlanning(weather.join());
 			eoloplant.advanceProgress();
 			rabbitProducer.sendMessage(eoloplant);
 		});
 
 		landscape.thenRun(() -> {
-			eoloplant.setLandscape(landscape.join());
+			eoloplant.addPlanning(landscape.join());
 			eoloplant.advanceProgress();
 			rabbitProducer.sendMessage(eoloplant);
 		});
@@ -45,8 +48,5 @@ public class RabbitConsumer {
 			eoloplant.advanceProgress();
 			rabbitProducer.sendMessage(eoloplant);
 		});
-
-		eoloplant.advanceProgress();
-		rabbitProducer.sendMessage(eoloplant);
 	}
 }

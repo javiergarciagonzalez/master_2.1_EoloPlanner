@@ -9,29 +9,21 @@ public class Eoloplant implements Serializable {
     private int id;
     private String city;
     private int progress = 0;
-    private String weather;
-    private String landscape;
+    private String planning;
 
     public Eoloplant(@JsonProperty("id") int id,
                      @JsonProperty("city") String city) {
         this.id = id;
         this.city = city;
+        this.planning = city;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getCity() {
         return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public int getProgress() {
@@ -43,23 +35,23 @@ public class Eoloplant implements Serializable {
         this.progress = Math.min(this.progress, 100);
     }
 
-    public void setWeather(String weather) {
-        this.weather = weather;
-    }
-
-    public void setLandscape(String landscape) {
-        this.landscape = landscape;
-    }
-
     public boolean getCompleted() {
         return this.progress == 100;
+    }
+
+    public void addPlanning(String str) {
+        if (!this.getCompleted())
+            this.planning += '-' + str;
     }
 
     public String getPlanning() {
         if (!this.getCompleted())
             return null;
 
-        return this.city + '-' + this.weather + '-' + this.landscape;
+        if (this.planning.matches("^[A-Ma-m].*"))
+            return this.planning.toLowerCase();
+
+        return this.planning.toUpperCase();
     }
 
     @Override

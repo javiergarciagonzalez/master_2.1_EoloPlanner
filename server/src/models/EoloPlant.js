@@ -16,12 +16,18 @@ export async function updateEoloPlant(plant) {
   plantSQL.progress = plant.progress;
   plantSQL.completed = plant.completed;
   if (plant.completed) {
-    const [,weather, landscape] = plant.planning.split('-');
-    plantSQL.weather = weather;
-    plantSQL.landscape = landscape;
+    const [,p1, p2] = plant.planning.split('-');
+    if (p1.toLowerCase().endsWith('ny') ) {
+      plantSQL.weather = p1;
+      plantSQL.landscape = p2;
+    } else {
+      plantSQL.weather = p2;
+      plantSQL.landscape = p1;
+    }
   }
   debug('updateDB edited', plantSQL);
   await plantSQL.save();
+  return plantSQL;
 }
 
 export class EoloPlant extends Model {}

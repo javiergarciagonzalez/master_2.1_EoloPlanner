@@ -1,19 +1,28 @@
-const plantsWs = new WeakMap();
-const usersWs = new WeakMap();
-
+const plantsWs = new Map();
+const usersWs = new Map();
+import DebugLib from 'debug';
+const debug = new DebugLib('users:relations');
+let allClients;
 
 export function savePlant (plantId, userId) {
-  console.log('savePlant', plantId, userId);
+  debug('savePlant', plantId, userId);
   plantsWs.set(plantId, usersWs.get(userId));
 }
 
 export function saveClient (userId, ws) {
-  console.log('saveClient', userId);
+  debug('saveClient', userId);
   usersWs.set(userId, ws);
 }
 
+export function saveClients (clients) {
+  allClients = clients;
+}
+
+export function getClients (clients) {
+  return clients;
+}
+
 export function getWs (plantId) {
-  console.log('getWs', plantId);
-  console.log('getWs', plantsWs.get(plantId));
+  debug('getWs', plantId);
   return plantsWs.get(plantId);
 }

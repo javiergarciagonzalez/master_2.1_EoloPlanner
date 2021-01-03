@@ -1,8 +1,14 @@
 let socket = new WebSocket("ws://" + window.location.host + "/eoloplants");
+let secWebsocketKey;
 
 socket.onmessage = function (event) {
   console.log(`[message] Data received from server: ${event.data}`);
-  editPlant(JSON.parse(event.data));
+  const data = JSON.parse(event.data);
+  if (data['sec-websocket-key']) {
+    secWebsocketKey = data['sec-websocket-key'];
+    return;
+  }
+  editPlant(data);
 };
 
 socket.onopen = function (event) {
@@ -27,7 +33,7 @@ async function createPlant() {
   const response = await fetch('/api/eoloplants', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({city})
+    body: JSON.stringify({city, secWebsocketKey})
   });
   const plant = await response.json();
   attachPlant(plant);

@@ -17,16 +17,18 @@ function exec(serviceName, command) {
   return cmd;
 }
 
-const services = new Set();
+const services = new Map();
 
-services.add(exec('weatherservice', 'node src/server.js'));
-services.add(exec('toposervice', 'mvn spring-boot:run'));
-services.add(exec('server', 'node src/server.js'));
-services.add(exec('planner', 'mvn spring-boot:run'));
+services.set('weatherservice', exec('weatherservice', 'node src/server.js'));
+services.set('toposervice', exec('toposervice', 'mvn spring-boot:run'));
+services.set('server', exec('server', 'node src/server.js'));
+services.set('planner', exec('planner', 'mvn spring-boot:run'));
 
-process.on('exit', async () => {
-  for (let service of services) {
-    service.stdin.pause();
-    service.kill();
+process.on('SIGINT', async () => {
+  for (var [name, cmd] of services) {
+    console.log(`Killing service [${name}]`);
+    cmd.stdin.pause();
+    await cmd.kill();
   }
+  process.exit();
 });

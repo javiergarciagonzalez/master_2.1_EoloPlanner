@@ -26,7 +26,7 @@ function getRoutes() {
     debug('user-key recieved', req.headers['user-key'])
     savePlant(plant.id, req.headers['user-key']);
     amqpProducer(plant);
-    return res.json(plant);
+    return res.status(202).json(plant);
   });
 
   routes.get("/api/eoloplants/:id", async (req, res) => {

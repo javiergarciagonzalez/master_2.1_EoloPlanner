@@ -1,7 +1,7 @@
 import ch from '../connections/amqpConnection.js';
 import config from 'config';
 import {updateEoloPlant} from '../models/EoloPlant.js'
-import {getWs, getClients} from '../models/EoloPlantsUsers.js';
+import {wsSend} from './wsClient.js';
 import DebugLib from 'debug';
 
 const debug = new DebugLib('server:amqp:consumer');
@@ -13,14 +13,7 @@ export default function amqpConsumer() {
   ch.consume(QUEUE, async msg => {
     const plant = JSON.parse(msg.content.toString());
     debug('plant received', plant.id);
-    await updateEoloPlant(plant);
-    if (plant.progress === 100) {
-      getClients().forEach(client => {
-        client.send(JSON.stringify(plant));
-      });
-    } else {
-      const ws = getWs(plant.id);
-      if (ws) ws.send(JSON.stringify(plant));
-    }
+    const saved = await updateEoloPlant(plant);
+    await wsSend(saved);
   }, {noAck: true});
 }

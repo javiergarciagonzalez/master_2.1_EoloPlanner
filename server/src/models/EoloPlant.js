@@ -2,7 +2,7 @@ import sequelize from '../connections/dataConnection.js';
 import sequelizePkg from 'sequelize';
 import DebugLib from "debug";
 
-const debug = new DebugLib('mysql');
+const debug = new DebugLib('server:mysql');
 const {DataTypes, Model} = sequelizePkg;
 
 export async function updateEoloPlant(plant) {
@@ -11,7 +11,7 @@ export async function updateEoloPlant(plant) {
       id: plant.id
     }
   });
-  debug('updateDB findOne', plantSQL);
+  debug('updateDB findOne', plantSQL.id);
 
   plantSQL.progress = plant.progress;
   if (plant.completed) {

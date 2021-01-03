@@ -12,7 +12,6 @@ socket.onmessage = function (event) {
   let weather = '';
   let landscape = '';
   if (data.completed) {
-    [, weather, landscape] = data.planning.split('-');
     document.querySelector('#generate').disabled = false;
   }
   editPlant({...data, weather, landscape});

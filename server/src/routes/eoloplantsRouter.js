@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import {EoloPlant} from '../models/EoloPlant.js'
 import amqpProducer from "../clients/amqpProducer.js";
+import {savePlant} from '../models/EoloPlantsUsers.js';
 
 function getRoutes() {
   const routes = Router();
@@ -19,6 +20,7 @@ function getRoutes() {
     } catch (e) {
       return res.status(409).send('Bad request!');
     }
+    savePlant(plant.id, req.headers['user-key']);
     amqpProducer(plant);
     return res.json(plant);
   });

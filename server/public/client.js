@@ -5,6 +5,10 @@ socket.onmessage = function (event) {
   editPlant(JSON.parse(event.data));
 };
 
+socket.onopen = function (event) {
+  console.log(`[onconnect] event received from server:`, event);
+};
+
 socket.onclose = function (event) {
   if (event.wasClean) {
     console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);

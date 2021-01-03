@@ -1,4 +1,4 @@
-import ch from './amqpConnection.js';
+import ch from '../connections/amqpConnection.js';
 import config from 'config';
 import {EoloPlant} from '../models/EoloPlant.js'
 

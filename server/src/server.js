@@ -4,11 +4,13 @@ import eoloplantsRouter from './routes/eoloplantsRouter.js';
 import wsRouter from './routes/wsRouter.js';
 import bodyParser from 'body-parser';
 import amqpConsumer from "./clients/amqpConsumer.js";
+import {saveClients} from './models/EoloPlantsUsers.js';
 
 const server = express();
 const wsEoloplants = expressWs(server).getWss('/eoloplants');
 
-amqpConsumer(wsEoloplants)
+saveClients(wsEoloplants.clients);
+amqpConsumer();
 
 server.use(bodyParser.urlencoded({extended: true}));
 server.use(express.json());

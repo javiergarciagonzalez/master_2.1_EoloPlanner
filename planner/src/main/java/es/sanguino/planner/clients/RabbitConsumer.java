@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -22,6 +23,7 @@ public class RabbitConsumer {
 
 	@RabbitListener(queues = "eoloplantCreationRequests", ackMode = "AUTO")
 	public void received(Eoloplant eoloplant){
+		rabbitProducer.sendMessage(eoloplant);
 
 		CompletableFuture<String> weather = weatherClient.getWeather(eoloplant.getCity());
 		CompletableFuture<String> landscape = topoClient.getLandscape(eoloplant.getCity());
@@ -29,16 +31,22 @@ public class RabbitConsumer {
 
 		weather.thenRun(() -> {
 			eoloplant.setWeather(weather.join());
+			eoloplant.advanceProgress();
 			rabbitProducer.sendMessage(eoloplant);
 		});
 
 		landscape.thenRun(() -> {
 			eoloplant.setLandscape(landscape.join());
+			eoloplant.advanceProgress();
 			rabbitProducer.sendMessage(eoloplant);
 		});
 
-		allFutures.thenRun(() -> rabbitProducer.sendMessage(eoloplant));
+		allFutures.thenRun(() -> {
+			eoloplant.advanceProgress();
+			rabbitProducer.sendMessage(eoloplant);
+		});
 
+		eoloplant.advanceProgress();
 		rabbitProducer.sendMessage(eoloplant);
 	}
 }

@@ -14,7 +14,6 @@ public class RabbitProducer {
 	RabbitTemplate rabbitTemplate;
 
 	public void sendMessage(Eoloplant eoloplant) {
-		eoloplant.advanceProgress();
 		if (eoloplant.getCompleted()) {
 			try {
 				Thread.sleep(1000 + new Random().nextInt(2000));

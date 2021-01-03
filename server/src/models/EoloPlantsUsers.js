@@ -1,7 +1,7 @@
 const plantsWs = new Map();
 const usersWs = new Map();
 import DebugLib from 'debug';
-const debug = new DebugLib('users:relations');
+const debug = new DebugLib('server:users:relations');
 let allClients;
 
 export function savePlant (plantId, userId) {
@@ -18,8 +18,8 @@ export function saveClients (clients) {
   allClients = clients;
 }
 
-export function getClients (clients) {
-  return clients;
+export function getClients () {
+  return usersWs;
 }
 
 export function getWs (plantId) {

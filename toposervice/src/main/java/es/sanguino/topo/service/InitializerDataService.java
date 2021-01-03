@@ -23,7 +23,20 @@ public class InitializerDataService {
                 new City("Madrid", "Flat"),
                 new City("Barcelona", "Flat"),
                 new City("Jaca", "Mountain"),
-                new City("Andorra", "Mountain")
+                new City("Andorra", "Mountain"),
+                new City("Valencia", "Flat"),
+                new City("Sevilla", "Montain"),
+                new City("Zaragoza", "Flat"),
+                new City("Málaga", "Montain"),
+                new City("Murcia", "Flat"),
+                new City("Palma", "Montain"),
+                new City("Bilbao", "Flat"),
+                new City("Alicante", "Montain"),
+                new City("Córdoba", "Flat"),
+                new City("Valladolid", "Montain"),
+                new City("Vigo", "Flat"),
+                new City("Gijón ", "Montain"),
+                new City("Vitoria", "Flat")
         );
 
         cities.flatMap(this.cityRepository::save).blockLast();

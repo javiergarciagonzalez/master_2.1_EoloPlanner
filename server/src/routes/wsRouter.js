@@ -1,4 +1,4 @@
-import {saveClientSocket} from '../clients/wsClient.js'
+import {saveClientSocket} from '../connections/wsConnection.js'
 import DebugLib from 'debug';
 const debug = new DebugLib('server:ws');
 

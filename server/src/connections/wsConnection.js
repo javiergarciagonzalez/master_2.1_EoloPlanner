@@ -1,9 +1,17 @@
-const plantsWs = new Map();
-const usersWs = new Map();
+import expressWs from 'express-ws';
+import wsRouter from "../routes/wsRouter.js";
 import DebugLib from 'debug';
 
-const debug = new DebugLib('server:users:relations');
-let wsEoloplants;
+const plantsWs = new Map();
+const usersWs = new Map();
+const debug = new DebugLib('server:ws');
+
+export let wsEoloplants
+
+export function createWs(server) {
+  wsEoloplants = expressWs(server).getWss('/eoloplants');
+  server.ws('/eoloplants', wsRouter);
+}
 
 export function savePlantCreator(plantId, userId) {
   debug('savePlantCreator', plantId, userId);
@@ -13,10 +21,6 @@ export function savePlantCreator(plantId, userId) {
 export function saveClientSocket(userId, ws) {
   debug('saveClientSocket', userId);
   usersWs.set(userId, ws);
-}
-
-export function createWSEoloplants(wsEP) {
-  wsEoloplants = wsEP;
 }
 
 export function wsSend(plant) {

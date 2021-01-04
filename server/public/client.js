@@ -4,9 +4,9 @@ let userKey;
 socket.onmessage = function (event) {
   console.log(`[message] Data received from server: ${event.data}`);
   const data = JSON.parse(event.data);
-  console.log('user-key', data['user-key'])
   if (data['user-key']) {
     userKey = data['user-key'];
+    console.log('user-key', data['user-key'])
     return;
   }
   let weather = '';
@@ -70,7 +70,6 @@ function deletePlant(id) {
 }
 
 function editPlant(plant) {
-  console.log(plant)
   const htmlContent = `
       <div class="card mb-4 shadow-sm">
         <div class="card-header">

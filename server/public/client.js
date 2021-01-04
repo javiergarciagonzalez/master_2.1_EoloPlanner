@@ -60,6 +60,7 @@ function attachPlant(plant) {
   const htmlContent = `<div id="plant-${plant.id}" class="col"></div>`;
   const current = document.querySelector('#plants').innerHTML;
   document.querySelector('#plants').innerHTML = htmlContent + current;
+  document.querySelector('#plants-title').style.display = 'block';
   editPlant(plant);
 }
 
@@ -67,6 +68,9 @@ function deletePlant(id) {
   const elem = document.querySelector('#plant-' + id);
   elem.parentNode.removeChild(elem);
   fetch('/api/eoloplants/'+id, {method: 'DELETE'});
+  if (document.querySelector('#plants').childElementCount === 0) {
+    document.querySelector('#plants-title').style.display = 'none';
+  }
 }
 
 function editPlant(plant) {

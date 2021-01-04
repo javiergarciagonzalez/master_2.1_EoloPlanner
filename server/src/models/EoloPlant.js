@@ -1,4 +1,4 @@
-import sequelize from '../connections/dataConnection.js';
+import sequelize from '../connections/mysqlConnection.js';
 import sequelizePkg from 'sequelize';
 import DebugLib from "debug";
 

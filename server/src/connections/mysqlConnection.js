@@ -8,7 +8,6 @@ export default new Sequelize('eoloplantsDB', 'root', 'password', {
     dialect: 'mysql',
     dialectModule: mysql2,
     logging: false
-
 });
 
 process.on('exit', async () => {

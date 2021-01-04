@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import {EoloPlant} from '../models/EoloPlant.js'
-import amqpProducer from "../clients/amqpProducer.js";
-import {savePlantCreator} from '../clients/wsClient.js';
+import amqpProducer from "../connections/amqpProducer.js";
+import {savePlantCreator} from '../connections/wsConnection.js';
 import DebugLib from 'debug';
 
 const debug = new DebugLib('server:rest');

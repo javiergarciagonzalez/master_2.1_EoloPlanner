@@ -9,12 +9,12 @@ socket.onmessage = function (event) {
     console.log('user-key', data['user-key'])
     return;
   }
-  let weather = '';
-  let landscape = '';
   if (data.completed) {
     document.querySelector('#generate').disabled = false;
+    editPlant(data);
+    return;
   }
-  editPlant({...data, weather, landscape});
+  editPlant({...data, weather:'', landscape:''});
 };
 
 socket.onopen = function (event) {

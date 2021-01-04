@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Random;
 
 @Service
@@ -17,12 +18,8 @@ public class TopoService {
     private CityRepository cityRepository;
 
     public Mono<City> getCity(String id) {
-        try {
-            Thread.sleep(1000 + new Random().nextInt(2000));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return this.cityRepository.findByIdIgnoreCase(id)
+                .delayElement(Duration.ofMillis(1000 + new Random().nextInt(2000)))
                 .switchIfEmpty(
                         Mono.error(new ResponseStatusException(
                                 HttpStatus.NOT_FOUND, "City with id " + id + " not found")));

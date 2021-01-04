@@ -1,4 +1,4 @@
-import ch from '../connections/amqpConnection.js';
+import {ch} from './amqpConnection.js';
 import config from 'config';
 import DebugLib from 'debug';
 

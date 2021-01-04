@@ -1,17 +1,19 @@
 import {connect} from 'amqplib';
 import config from 'config';
 import DebugLib from 'debug';
+import amqpConsumer from './amqpConsumer.js';
 
-const debug = new DebugLib('server:amqp');
+export let ch;
 
+export async function createAmqp() {
+  const debug = new DebugLib('server:amqp');
+  const URL = config.get('amqp.url');
+  const conn = await connect(URL);
+  ch = await conn.createChannel();
+  amqpConsumer(ch);
 
-const URL = config.get('amqp.url');
-const conn = await connect(URL);
-const ch = await conn.createChannel();
-
-process.on('exit', () => {
-  ch.close();
-  debug(`Closing rabbitmq channel`);
-});
-
-export default ch;
+  process.on('exit', () => {
+    ch.close();
+    debug(`Closing rabbitmq channel`);
+  });
+}

@@ -1,6 +1,6 @@
 const { spawnSync } = require('child_process');
 
-function exec(action, serviceName, command){
+function exec(serviceName, command){
 
   console.log(`Installing dependencies for [${serviceName}]`);
   console.log(`Folder: ${serviceName} Command: ${command}`);

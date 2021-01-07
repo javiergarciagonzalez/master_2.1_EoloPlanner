@@ -35,7 +35,7 @@ public class InitializerDataService {
                 new City("Córdoba", "Flat"),
                 new City("Valladolid", "Mountain"),
                 new City("Vigo", "Flat"),
-                new City("Gijón ", "Mountain"),
+                new City("Gijón", "Mountain"),
                 new City("Vitoria", "Flat")
         );
 

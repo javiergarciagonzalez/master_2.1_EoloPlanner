@@ -25,17 +25,17 @@ public class InitializerDataService {
                 new City("Jaca", "Mountain"),
                 new City("Andorra", "Mountain"),
                 new City("Valencia", "Flat"),
-                new City("Sevilla", "Montain"),
+                new City("Sevilla", "Mountain"),
                 new City("Zaragoza", "Flat"),
-                new City("Málaga", "Montain"),
+                new City("Málaga", "Mountain"),
                 new City("Murcia", "Flat"),
-                new City("Palma", "Montain"),
+                new City("Palma", "Mountain"),
                 new City("Bilbao", "Flat"),
-                new City("Alicante", "Montain"),
+                new City("Alicante", "Mountain"),
                 new City("Córdoba", "Flat"),
-                new City("Valladolid", "Montain"),
+                new City("Valladolid", "Mountain"),
                 new City("Vigo", "Flat"),
-                new City("Gijón ", "Montain"),
+                new City("Gijón ", "Mountain"),
                 new City("Vitoria", "Flat")
         );
 
